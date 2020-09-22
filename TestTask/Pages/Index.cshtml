@@ -1,0 +1,28 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<div class="container">
+    <div class="row">        
+        <div class="col-4">
+            @foreach (var item in Model.Orders)
+            {
+                <div class="row" style="padding-top:2px;">
+                    <div class="col-sm-1" style="background:@(item.OrderStatus == Models.OrderStatus.InProgeress ? "red" : "green");">
+
+                    </div>
+                    <div class="col-sm-11">
+                        <a class="btn btn-outline-primary" asp-page="Index" asp-route-id="@item.OrderID"> Order #@item.OrderID @item.OrderDate.ToString("f")</a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-8">
+            <div id="OrderDetail">                
+                    @{await Html.RenderPartialAsync("OrderDetail", Model.SelectedOrder);}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+﻿@model TestTask.Models.Order
+
+@if (Model != null)
+{
+    <div class="border">
+        <dl class="row">
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.OrderID)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.OrderID)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.OrderDate)
+            </dd>
+            <dt class="col-sm-5">
+                Total
+            </dt>
+            <dd class="col-sm-7">
+                @Model.OrderRows.Sum(s => (s.ProductQuantity * s.ProductPrice)).ToString("N2")
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.OrderStatus)
+            </dt>
+            <dd class="col-sm-1" style="background:@(Model.OrderStatus == Models.OrderStatus.InProgeress ? "red" : "green")">
+
+            </dd>
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.OrderStatus)
+            </dd>
+        </dl>
+    </div>
+    
+    <div class="border" style="padding-top:5px;">
+        <table class="table text-center">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.OrderRows[0].ProductName)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderRows[0].ProductPrice)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderRows[0].ProductQuantity)</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderRows)
+                {
+                    <tr>
+                        <td class="text-left">@item.ProductName</td>
+                        <td>@item.ProductPrice.ToString("N2")</td>
+                        <td>@item.ProductQuantity</td>
+                        <td>@((item.ProductPrice * item.ProductQuantity).ToString("N2"))</td>
+                    </tr>
+                }
+                <tr class="table-dark font-weight-bolder">
+                    <td>In Total</td>
+                    <td>X</td>
+                    <td>@Model.OrderRows.Sum(s => s.ProductQuantity).ToString("N2")</td>
+                    <td>@Model.OrderRows.Sum(s => (s.ProductQuantity * s.ProductPrice)).ToString("N2")</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+}
